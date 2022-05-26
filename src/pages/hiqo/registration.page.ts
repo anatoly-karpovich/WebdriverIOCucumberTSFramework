@@ -8,35 +8,40 @@ type Data = {
 };
 
 class RegistrationPage extends Page {
-  get title() {
+  private get title() {
     return $("#registerForm");
   }
-  get username() {
+  private get username() {
     return $("#userNameOnRegister");
   }
-  get password() {
+  private get password() {
     return $("#passwordOnRegister");
   }
-  get registerBtn() {
+  private get registerBtn() {
     return $("#register");
   }
-  get errorMsg() {
+  private get errorMsg() {
     return $("#errorMessageOnRegister");
   }
-  get backBtn() {
+  private get backBtn() {
     return $("#backOnRegister");
+  }
+
+  //access
+  public getTitle() {
+    return this.title;
   }
 
   //actions
 
-  async open() {
+  public async open(): Promise<void> {
     await LoginPage.register();
     await this.backBtn.waitForDisplayed({ timeout: 3000 });
     let regTitle = await this.title.getText();
-    await expect(regTitle).toEqual("Registration");
+    expect(regTitle).toEqual("Registration");
   }
 
-  async register(data: Data) {
+  public async register(data: Data): Promise<void> {
     await this.username.setValue(data.username);
     await this.password.setValue(data.password);
     await this.registerBtn.click();
@@ -45,10 +50,10 @@ class RegistrationPage extends Page {
     expect(message).toEqual(data.message);
   }
 
-  async back() {
+  public async back(): Promise<void> {
     await this.backBtn.click();
-    await LoginPage.title.waitForDisplayed({ timeout: 3000 });
-    expect(await LoginPage.title.getText()).toEqual("Login");
+    await LoginPage.getTitle().waitForDisplayed({ timeout: 3000 });
+    expect(await LoginPage.getTitle().getText()).toEqual("Login");
   }
 }
 

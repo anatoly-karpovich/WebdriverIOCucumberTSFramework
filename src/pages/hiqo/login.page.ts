@@ -9,39 +9,45 @@ type Data = {
 };
 class LoginPage extends Page {
   // components
-  get username() {
+  private get username() {
     return $("#userName");
   }
-  get password() {
+  private get password() {
     return $("#password");
   }
-  get submitButton() {
+  private get submitButton() {
     return $("#submit");
   }
-  get errorMsg() {
+  private get errorMsg() {
     return $("#errorMessage");
   }
-  get registerBtn() {
+  private get registerBtn() {
     return $("#registerOnLogin");
   }
-  get title() {
+  private get title() {
     return $("#loginForm");
   }
 
-  async open() {
+  public getTitle() {
+    return this.title;
+  }
+  public getRegisterBtn() {
+    return this.registerBtn;
+  }
+  public async open(): Promise<void> {
     super.open("https://anatoly-karpovich.github.io/HiqoMeetup/");
     expect(browser).toHaveTitle("Example for testing");
   }
 
-  async login(data: Data) {
+  public async login(data: Data): Promise<void> {
     await this.username.setValue(data.username);
     await this.password.setValue(data.password);
     await this.submitButton.click();
-    await HomePage.successMsg.waitForDisplayed({ timeout: 3000 });
-    expect(await HomePage.successMsg.getText()).toEqual(`Hello, ${data.username}!`);
+    await HomePage.getSuccessMsg().waitForDisplayed({ timeout: 3000 });
+    expect(await HomePage.getSuccessMsg().getText()).toEqual(`Hello, ${data.username}!`);
   }
 
-  async loginTest(data: Data) {
+  public async loginTest(data: Data): Promise<void> {
     await this.username.setValue(data.username);
     await this.password.setValue(data.password);
     await this.submitButton.click();
@@ -49,10 +55,10 @@ class LoginPage extends Page {
     expect(await this.errorMsg.getText()).toEqual(data.message);
   }
 
-  async register() {
+  public async register(): Promise<void> {
     await this.registerBtn.click();
-    await RegistrationPage.title.waitForDisplayed({ timeout: 3000 });
-    expect(await RegistrationPage.title.getText()).toEqual("Registration");
+    await RegistrationPage.getTitle().waitForDisplayed({ timeout: 3000 });
+    expect((await RegistrationPage.getTitle()).getText()).toEqual("Registration");
   }
 }
 

@@ -2,16 +2,21 @@ import LoginPage from "./login.page";
 import Page from "./page";
 
 class HomePage extends Page {
-  get successMsg() {
+  private get successMsg() {
     return $("#successMessage");
   }
-  get backBtn() {
+  private get backBtn() {
     return $("#backButton");
   }
-  async back() {
+
+  public getSuccessMsg() {
+    return this.successMsg;
+  }
+
+  public async back(): Promise<void> {
     await this.backBtn.click();
-    await LoginPage.registerBtn.waitForDisplayed({ timeout: 3000 });
-    expect(await LoginPage.title.getText()).toEqual("Login");
+    await LoginPage.getTitle().waitForDisplayed({ timeout: 3000 });
+    expect(await LoginPage.getTitle().getText()).toEqual("Login");
   }
 }
 

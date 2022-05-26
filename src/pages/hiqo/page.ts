@@ -1,5 +1,5 @@
 export default class Page {
-  async open(path: string) {
+  public async open(path: string): Promise<void> {
     await browser.url(path);
   }
 }

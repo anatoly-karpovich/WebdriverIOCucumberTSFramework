@@ -16,7 +16,7 @@ Then(/^I register with following incorrect credentials:$/, async function (table
 });
 
 When(/^I click on register button$/, async function () {
-  await LoginPage.registerBtn.click();
+  await LoginPage.getRegisterBtn().click();
 });
 
 Then(/^I validate this header \"([^\"]*)\"$/, async function (header: string) {
@@ -27,5 +27,4 @@ Then(/^I validate this header \"([^\"]*)\"$/, async function (header: string) {
 Then(/^I must be navigated to registration form with header as \"([^\"]*)\"$/, async function (registration: string) {
   await $("#registerForm").waitForDisplayed();
   expect(await $("#registerForm").getText()).toEqual(registration);
-  await browser.pause(2000);
 });
